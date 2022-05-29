@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  backend:
+    image: lineup
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    ports:
+      - 8081:80
+    volumes:
+      - ./backend:/code
+  frontend:
+    image: lineup-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app

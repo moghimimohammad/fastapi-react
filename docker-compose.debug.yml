@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  backend:
+    image: lineup
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.main:app --host 0.0.0.0 --port 8081 --reload"]
+    ports:
+      - 8081:8081
+      - 5678:5678
+    volumes:
+      - ./backend:/code
+  frontend:
+    image: lineup-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app
